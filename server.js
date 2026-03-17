@@ -23,3 +23,8 @@ async function handleRewrite() {
     alert("Une erreur est survenue côté serveur.");
   }
 }
+
+
+
+
+
