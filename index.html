@@ -1046,9 +1046,6 @@ Réponds UNIQUEMENT avec du JSON valide (sans markdown, sans backticks) :
 
     if (!bullet) { showErr(t.errBullet); return; }
 
-    const apiKey = document.getElementById('api-key').value.trim() || window.ANTHROPIC_API_KEY;
-    if (!apiKey) { showErr(t.errKey); return; }
-
     // Loading state
     const btn = document.getElementById('rewrite-btn');
     btn.disabled = true;
@@ -1065,25 +1062,23 @@ Réponds UNIQUEMENT avec du JSON valide (sans markdown, sans backticks) :
     );
 
     try {
-      const res = await fetch('https://api.anthropic.com/v1/messages', {
+      const res = await fetch('/api/rewrite', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
-          'x-api-key': apiKey,
-          'anthropic-version': '2023-06-01',
-          'anthropic-dangerous-direct-browser-access': 'true'
+          'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          model: 'claude-haiku-4-5-20251001',
-          max_tokens: 900,
-          messages: [{ role: 'user', content: prompt }]
+	        bullet,
+	        prof: selProf,
+	        tone: selTone,
+	        jd
         })
       });
 
       const data = await res.json();
       if (!res.ok) throw new Error(data.error?.message || 'API error');
 
-      const raw  = data.content[0].text.trim().replace(/```json|```/g,'').trim();
+      const raw  = data.content[0].text;
       const r    = JSON.parse(raw);
 
       // --- Score ---
