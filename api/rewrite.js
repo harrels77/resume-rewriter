@@ -17,7 +17,7 @@ export default async function handler(req, res) {
   // Contextes selon la profession
   const profCtx = {
     general:    "general professional context",
-    tech:       "tech / software development",
+    tech:       "tech/software development",
     marketing:  "marketing and growth",
     finance:    "finance and accounting",
     healthcare: "healthcare and medical",
