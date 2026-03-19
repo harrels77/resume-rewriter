@@ -1078,7 +1078,7 @@ Réponds UNIQUEMENT avec du JSON valide (sans markdown, sans backticks) :
       const data = await res.json();
       if (!res.ok) throw new Error(data.error?.message || 'API error');
 
-      const raw  = data.content[0].text;
+      const raw  = data.content[0].text.trim().replace(/```json|```/g, '').trim();
       const r    = JSON.parse(raw);
 
       // --- Score ---
